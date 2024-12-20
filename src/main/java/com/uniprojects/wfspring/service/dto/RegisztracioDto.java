@@ -1,7 +1,5 @@
 package com.uniprojects.wfspring.service.dto;
 
-import jakarta.persistence.Column;
-
 import java.util.Objects;
 
 public class RegisztracioDto {
