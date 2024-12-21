@@ -20,7 +20,8 @@ public class SzobaServiceImpl implements SzobaService {
 
     @Override
     public SzobaDto create(SzobaDto dto) {
-        SzobaEntity entity = modelMapper.map(dto, SzobaEntity.class);
+        SzobaEntity entity = new SzobaEntity();
+        modelMapper.map(dto, entity, "SzobaSkipId");
         szobaRepository.save(entity);
 
         SzobaDto rdto = modelMapper.map(entity, SzobaDto.class);
@@ -45,7 +46,7 @@ public class SzobaServiceImpl implements SzobaService {
     @Override
     public SzobaDto update(Long id, SzobaDto dto) {
         SzobaEntity entity = szobaRepository.getReferenceById(id);
-        modelMapper.map(dto, entity);
+        modelMapper.map(dto, entity, "SzobaSkipId");
         szobaRepository.save(entity);
 
         SzobaDto rdto = modelMapper.map(entity, SzobaDto.class);

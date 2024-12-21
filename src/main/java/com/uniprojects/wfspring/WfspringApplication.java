@@ -25,6 +25,10 @@ public class WfspringApplication {
 		m.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		m.getConfiguration().setSkipNullEnabled(true);
 
+		m.createTypeMap(SzobaDto.class, SzobaEntity.class);
+		m.createTypeMap(SzobaDto.class, SzobaEntity.class, "SzobaSkipId")
+				.addMappings(mapper -> mapper.skip(SzobaEntity::setId));
+
 		return m;
 	}
 }
