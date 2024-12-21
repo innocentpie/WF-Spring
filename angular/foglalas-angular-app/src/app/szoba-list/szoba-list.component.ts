@@ -14,6 +14,7 @@ import { HeaderComponent } from '../header/header.component';
 
 interface SzobaV extends Szoba{
   isEditing: boolean;
+  isNew: boolean;
 }
 
 @Component({
@@ -49,7 +50,7 @@ export class SzobaListComponent {
 
   loadSzobak() {
     this.szobaService.getAll().subscribe(data => {
-      let a = (data as Szoba[]).map(x => { return {...x, isEditing: false } });
+      let a = (data as Szoba[]).map(x => { return {...x, isEditing: false, isNew: false } });
       this.szobak = a;
       this.dataSource.data = a;
     });
@@ -79,26 +80,59 @@ export class SzobaListComponent {
     }
   }
 
-    deleteSzoba(id: number): void {
-      this.adminSzobaService.delete(id).subscribe(data => {
-        this.loadSzobak();
-      }, error => {
-        this.loadSzobak();
-      });
-    }
+  deleteSzoba(id: number): void {
+    this.adminSzobaService.delete(id).subscribe(data => {
+      this.loadSzobak();
+    }, error => {
+      this.loadSzobak();
+    });
+  }
 
-    editSzoba(id: number): void {
-      let s = this.szobak.find(x => x.id === id);
-      if(s)
-        s.isEditing = true;
-    }
+  editSzoba(id: number): void {
+    let s = this.szobak.find(x => x.id === id);
+    if(s)
+      s.isEditing = true;
+  }
 
-    saveSzoba(szoba: SzobaV): void {
-      szoba.isEditing = false;
-      this.adminSzobaService.update(szoba).subscribe(data => {
-        this.loadSzobak();
-      }, error => {
-        this.loadSzobak();
-      });
+  saveSzoba(szoba: SzobaV): void {
+    szoba.isEditing = false;
+    let o;
+    if(szoba.isNew) {
+      o = this.adminSzobaService.create(szoba);
     }
+    else {
+      o = this.adminSzobaService.update(szoba);
+    }
+    
+    o.subscribe(data => {
+      this.loadSzobak();
+    }, error => {
+      this.loadSzobak();
+    });
+  }
+
+  addSzoba(): void {
+    if(this.szobak[this.szobak.length - 1].isNew)
+      return;
+
+    let a: SzobaV = {
+      id: undefined,
+      szobaszam: 0,
+      maxFerohely: 0,
+      ftPerEjszaka: 0,
+      isEditing: true,
+      isNew: true,
+    };
+    this.szobak.push(a);
+    this.dataSource.data = this.szobak;
+  }
+
+  cancelAddSzoba(): void {
+    this.szobak.pop();
+    this.dataSource.data = this.szobak;
+  }
+
+  cancelEditSzoba(szoba: SzobaV): void {
+    szoba.isEditing = false;
+  }
 }

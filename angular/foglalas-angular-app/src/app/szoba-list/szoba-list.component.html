@@ -69,8 +69,14 @@
             <button *ngIf="szoba.isEditing" mat-icon-button color="primary" (click)="saveSzoba(szoba)">
                 <mat-icon>save</mat-icon>
             </button>
-            <button mat-icon-button color="warn" (click)="deleteSzoba(szoba.id)">
+            <button *ngIf="!szoba.isEditing && !szoba.isNew" mat-icon-button color="warn" (click)="deleteSzoba(szoba.id)">
                 <mat-icon>delete</mat-icon>
+            </button>
+            <button *ngIf="szoba.isNew" mat-icon-button color="warn" (click)="cancelAddSzoba()">
+                <mat-icon>cancel</mat-icon>
+            </button>
+            <button *ngIf="!szoba.isNew && szoba.isEditing" mat-icon-button color="warn" (click)="cancelEditSzoba(szoba)">
+                <mat-icon>cancel</mat-icon>
             </button>
             </td>
         </ng-container>
@@ -82,6 +88,6 @@
     </mat-card-content>
   
     <mat-card-actions *ngIf="isAdmin()">
-      <button mat-button color="primary">Új szoba hozzáadása</button>
+      <button mat-button color="primary" (click)="addSzoba()">Új szoba hozzáadása</button>
     </mat-card-actions>
   </mat-card>
