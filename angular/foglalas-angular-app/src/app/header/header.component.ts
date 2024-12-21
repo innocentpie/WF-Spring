@@ -32,6 +32,8 @@ export class HeaderComponent {
   loadFelhasznalo() {
     this.felhasznaloService.getFelhasznalo().subscribe(data => {
       this.felhasznalo = data;
+    }, error => {
+      this.router.navigate(['/']);
     });
   }
 
