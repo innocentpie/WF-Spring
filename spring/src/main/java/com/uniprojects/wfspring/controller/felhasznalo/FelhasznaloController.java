@@ -1,4 +1,4 @@
-package com.uniprojects.wfspring.controller;
+package com.uniprojects.wfspring.controller.felhasznalo;
 
 import com.uniprojects.wfspring.service.UserService;
 import com.uniprojects.wfspring.service.dto.FelhasznaloDto;
