@@ -2,6 +2,19 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
+export interface Felhasznalo {
+  id?: number;
+  nev: string;
+  email: string;
+  telefonszam: string;
+  jogosultsagok: Jogosultsag[];
+}
+
+export interface Jogosultsag {
+  id?: number;
+  nev: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
