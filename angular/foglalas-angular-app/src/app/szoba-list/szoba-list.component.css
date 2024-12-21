@@ -8,7 +8,9 @@
   /* Styling the mat-card container */
   mat-card {
     margin: 20px auto;
+    margin-top: 0px;
     padding: 20px;
+    padding-top: 0px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     background-color: #ffffff;
@@ -140,7 +142,6 @@
   }
   
   mat-card-actions button {
-    font-weight: bold;
     padding: 12px 20px;
     border-radius: 4px;
     background-color: #28a745;

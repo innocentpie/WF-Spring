@@ -29,7 +29,7 @@
                 {{ foglalas.felhasznalo.email }}
                 </ng-container>
                 <ng-container *ngIf="foglalas.isEditing">
-                    <mat-select [(value)]="foglalas.felhasznaloId" class="tdinput">
+                    <mat-select [(value)]="foglalas.felhasznaloId" class="tdinput tdinput-select">
                         @for (felhaszn of felhasznalok; track felhaszn) {
                           <mat-option [value]="felhaszn.id">
                             <div class="szoba-option">
@@ -49,7 +49,7 @@
                     {{ foglalas.szoba.szobaszam }}
                 </ng-container>
                 <ng-container *ngIf="foglalas.isEditing">
-                    <mat-select [(value)]="foglalas.szobaId" class="tdinput">
+                    <mat-select [(value)]="foglalas.szobaId" class="tdinput tdinput-select">
                         @for (szoba of szobak; track szoba) {
                           <mat-option [value]="szoba.id">
                             <div class="szoba-option">
