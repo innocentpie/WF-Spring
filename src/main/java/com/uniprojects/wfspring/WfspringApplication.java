@@ -1,6 +1,12 @@
 package com.uniprojects.wfspring;
 
+import com.uniprojects.wfspring.data.entity.FoglalasEntity;
+import com.uniprojects.wfspring.data.entity.SzobaEntity;
+import com.uniprojects.wfspring.service.dto.FoglalasDto;
+import com.uniprojects.wfspring.service.dto.SzobaDto;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +20,11 @@ public class WfspringApplication {
 
 	@Bean
 	ModelMapper modelMapper() {
-		return new ModelMapper();
+		ModelMapper m = new ModelMapper();
+
+		m.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+		m.getConfiguration().setSkipNullEnabled(true);
+
+		return m;
 	}
 }
