@@ -150,7 +150,6 @@ export class FoglalasokComponent {
 
   saveFoglalas(foglalas: FoglalasV): void {
     foglalas.isEditing = false;
-    console.log(foglalas);
     let o;
     if(foglalas.isNew) {
       if(this.isAdmin()) {

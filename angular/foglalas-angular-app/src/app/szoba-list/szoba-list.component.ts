@@ -56,8 +56,6 @@ export class SzobaListComponent {
       let a = (data as Szoba[]).map(x => { return {...x, isEditing: false, isNew: false } });
       this.szobak = a;
       this.dataSource.data = a;
-
-      console.log(a);
     });
   }
 
