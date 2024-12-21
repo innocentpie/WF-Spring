@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
@@ -31,5 +33,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public FelhasznaloDto getByEmail(String email) {
         return modelMapper.map(felhasznaloRepository.findByEmail(email), FelhasznaloDto.class);
+    }
+
+    @Override
+    public List<FelhasznaloDto> getAll() {
+        return felhasznaloRepository.findAll()
+                .stream()
+                .map(x -> modelMapper.map(x, FelhasznaloDto.class))
+                .toList();
     }
 }
