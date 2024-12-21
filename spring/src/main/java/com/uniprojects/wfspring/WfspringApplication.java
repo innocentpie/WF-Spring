@@ -29,6 +29,10 @@ public class WfspringApplication {
 		m.createTypeMap(SzobaDto.class, SzobaEntity.class, "SzobaSkipId")
 				.addMappings(mapper -> mapper.skip(SzobaEntity::setId));
 
+		m.createTypeMap(FoglalasEntity.class, FoglalasDto.class)
+				.addMapping(x -> x.getFelhasznalo().getId(), FoglalasDto::setFelhasznaloId)
+				.addMapping(x -> x.getSzoba().getId(), FoglalasDto::setSzobaId);
+
 		return m;
 	}
 }
