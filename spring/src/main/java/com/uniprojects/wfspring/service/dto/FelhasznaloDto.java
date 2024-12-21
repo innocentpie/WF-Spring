@@ -1,6 +1,7 @@
 package com.uniprojects.wfspring.service.dto;
 
 
+import java.util.List;
 import java.util.Objects;
 
 public class FelhasznaloDto {
@@ -8,6 +9,8 @@ public class FelhasznaloDto {
     private String nev;
     private String email;
     private String telefonszam;
+
+    private List<JogosultsagDto> jogosultsagok;
 
     public FelhasznaloDto() {
     }
@@ -17,6 +20,22 @@ public class FelhasznaloDto {
         this.nev = nev;
         this.email = email;
         this.telefonszam = telefonszam;
+    }
+
+    public FelhasznaloDto(long id, String nev, String email, String telefonszam, List<JogosultsagDto> jogosultsagok) {
+        this.id = id;
+        this.nev = nev;
+        this.email = email;
+        this.telefonszam = telefonszam;
+        this.jogosultsagok = jogosultsagok;
+    }
+
+    public List<JogosultsagDto> getJogosultsagok() {
+        return jogosultsagok;
+    }
+
+    public void setJogosultsagok(List<JogosultsagDto> jogosultsagok) {
+        this.jogosultsagok = jogosultsagok;
     }
 
     public long getId() {
