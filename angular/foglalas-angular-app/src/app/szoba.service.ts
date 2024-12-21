@@ -4,9 +4,9 @@ import { Observable } from 'rxjs';
 
 export interface Szoba {
   id?: number;
-  szobaszam: number;
-  maxFerohely: number;
-  ftPerEjszaka: number;
+  szobaszam?: number;
+  maxFerohely?: number;
+  ftPerEjszaka?: number;
 }
 
 @Injectable({

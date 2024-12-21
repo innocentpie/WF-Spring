@@ -1,45 +1,111 @@
 <app-header></app-header>
 
 <mat-card>
-  <mat-card-header>
-    <mat-card-title>Foglalások</mat-card-title>
-    <mat-card-subtitle>Lista a foglalásokról</mat-card-subtitle>
-  </mat-card-header>
+    <mat-card-header>
+      <mat-card-title>Foglalások {{ isAdmin() ? '(Adminisztrátor mód)' : '' }}</mat-card-title>
+      <mat-card-subtitle>Lista a foglalásokról</mat-card-subtitle>
+    </mat-card-header>
+  
+    <mat-card-content>
+      <!-- Search Section (optional, if you want to add search functionality later) -->
+      <mat-form-field appearance="outline">
+        <mat-label>Keresés</mat-label>
+        <input matInput (input)="applyFilter($event)" placeholder="Foglalás keresése">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+  
+      <!-- Table displaying Foglalas -->
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <!-- Column Definitions -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> Id </th>
+          <td mat-cell *matCellDef="let foglalas">{{ foglalas.id }}</td>
+        </ng-container>
+    
+        <ng-container matColumnDef="szobaSzam">
+            <th mat-header-cell *matHeaderCellDef> Szoba szám </th>
+            <td mat-cell *matCellDef="let foglalas">
+                <ng-container *ngIf="!foglalas.isEditing">
+                {{ foglalas.szoba.szobaszam }}
+                </ng-container>
+                <ng-container *ngIf="foglalas.isEditing">
+                    <mat-select [(value)]="foglalas.szobaId" class="tdinput">
+                        @for (szoba of szobak; track szoba) {
+                          <mat-option [value]="szoba.id">
+                            <div class="szoba-option">
+                                <p>{{ szoba.szobaszam }}-es szoba&nbsp;</p>
+                                <p>({{szoba.maxFerohely}} férőhely - {{szoba.ftPerEjszaka}}Ft/éj)</p>
+                            </div>
+                        </mat-option>
+                        }
+                      </mat-select>
+                    <!-- <input matInput [(ngModel)]="foglalas.szoba.szobaszam"> -->
+                </ng-container>
+            </td>
+        </ng-container>
 
-  <mat-card-content>
-    <!-- Search Section (optional, if you want to add search functionality later) -->
-    <mat-form-field appearance="fill">
-      <mat-label>Szoba szám keresése</mat-label>
-      <input matInput (input)="applyFilter($event)" placeholder="Szoba szám">
-      <mat-icon matSuffix>search</mat-icon>
-    </mat-form-field>
+        <ng-container matColumnDef="elfoglalasDatum">
+            <th mat-header-cell *matHeaderCellDef> Elfoglalás dátuma </th>
+            <td mat-cell *matCellDef="let foglalas">
+                <ng-container *ngIf="!foglalas.isEditing">
+                {{ foglalas.elfoglalasDatum | date:'yyyy. MM. dd.' }}
+                </ng-container>
+                <ng-container *ngIf="foglalas.isEditing">
+                    <div style="display: flex;">
+                        <input matInput [matDatepicker]="picker" [(ngModel)]="foglalas.elfoglalasDatum">
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </div>
+                </ng-container>
+            </td>
+        </ng-container>
 
-    <!-- Table displaying Foglalas -->
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-      <!-- Column Definitions -->
-      <ng-container matColumnDef="szoba szám">
-        <th mat-header-cell *matHeaderCellDef> Szoba szám </th>
-        <td mat-cell *matCellDef="let foglalas">{{ foglalas.szobaSzam }}</td>
-      </ng-container>
+        <ng-container matColumnDef="elhagyasDatum">
+            <th mat-header-cell *matHeaderCellDef> Elhagyés dátuma </th>
+            <td mat-cell *matCellDef="let foglalas">
+                <ng-container *ngIf="!foglalas.isEditing">
+                {{ foglalas.elhagyasDatum | date:'yyyy. MM. dd.' }}
+                </ng-container>
+                <ng-container *ngIf="foglalas.isEditing">
+                    <div style="display: flex;">
+                        <input matInput [matDatepicker]="picker" [(ngModel)]="foglalas.elhagyasDatum">
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </div>
+                </ng-container>
+            </td>
+        </ng-container>
+  
+            <!-- Actions Column (Edit/Delete buttons) -->
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Műveletek </th>
+            <td mat-cell *matCellDef="let foglalas">
+            <!-- Edit and Delete buttons -->
+            <button *ngIf="!foglalas.isEditing" mat-icon-button color="primary" (click)="editFoglalas(foglalas.id)">
+                <mat-icon>edit</mat-icon>
+            </button>
+            <button *ngIf="foglalas.isEditing" mat-icon-button color="primary" (click)="saveFoglalas(foglalas)">
+                <mat-icon>save</mat-icon>
+            </button>
+            <button *ngIf="!foglalas.isEditing && !foglalas.isNew" mat-icon-button color="warn" (click)="deleteFoglalas(foglalas.id)">
+                <mat-icon>delete</mat-icon>
+            </button>
+            <button *ngIf="foglalas.isNew" mat-icon-button color="warn" (click)="cancelAddFoglalas()">
+                <mat-icon>cancel</mat-icon>
+            </button>
+            <button *ngIf="!foglalas.isNew && foglalas.isEditing" mat-icon-button color="warn" (click)="cancelEditFoglalas(foglalas)">
+                <mat-icon>cancel</mat-icon>
+            </button>
+            </td>
+        </ng-container>
 
-      <ng-container matColumnDef="elfoglalás dátuma">
-        <th mat-header-cell *matHeaderCellDef> Elfoglalás dátuma </th>
-        <td mat-cell *matCellDef="let foglalas">{{ foglalas.elfoglalasDatum }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="elhagyás dátuma">
-        <th mat-header-cell *matHeaderCellDef> Elhagyás dátuma </th>
-        <td mat-cell *matCellDef="let foglalas">{{ foglalas.elhagyasDatum }}</td>
-      </ng-container>
-
-      <!-- Table Header and Footer -->
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-  </mat-card-content>
-
-  <mat-card-actions>
-    <!-- Optionally add any action buttons (e.g., Add new reservation) -->
-    <button mat-button color="primary">Új foglalás hozzáadása</button>
-  </mat-card-actions>
-</mat-card>
+        <!-- Table Header and Footer -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </mat-card-content>
+  
+    <mat-card-actions>
+      <button mat-button color="primary" (click)="addFoglalas()">Új foglalás hozzáadása</button>
+    </mat-card-actions>
+  </mat-card>

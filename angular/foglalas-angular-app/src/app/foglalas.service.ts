@@ -6,8 +6,8 @@ import { Szoba } from './szoba.service';
 
 export interface Foglalas {
   id?: number;
-  felhasznaloId: number;
-  szobaId: number;
+  felhasznaloId?: number;
+  szobaId?: number;
   elfoglalasDatum: Date;
   elhagyasDatum: Date;
 
@@ -44,6 +44,6 @@ export class FoglalasService {
   }
 
   delete(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/update?id=${id}`, { headers: this.getHeaders() });
+    return this.http.delete(`${this.baseUrl}/delete?id=${id}`, { headers: this.getHeaders() });
   }
 }
