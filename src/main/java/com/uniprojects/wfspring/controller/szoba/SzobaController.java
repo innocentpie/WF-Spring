@@ -1,4 +1,4 @@
-package com.uniprojects.wfspring.controller;
+package com.uniprojects.wfspring.controller.szoba;
 
 import com.uniprojects.wfspring.service.SzobaService;
 import com.uniprojects.wfspring.service.dto.SzobaDto;
@@ -21,20 +21,5 @@ public class SzobaController {
     @GetMapping("/get")
     public SzobaDto get(@RequestParam Long id) {
         return szobaService.get(id);
-    }
-
-    @PostMapping("/create")
-    public SzobaDto create(@RequestBody SzobaDto dto) {
-        return szobaService.create(dto);
-    }
-
-    @PutMapping("/update")
-    public SzobaDto update(@RequestParam Long id, @RequestBody SzobaDto dto) {
-        return szobaService.update(id, dto);
-    }
-
-    @DeleteMapping("/delete")
-    public void delete(@RequestParam Long id) {
-        szobaService.delete(id);
     }
 }
