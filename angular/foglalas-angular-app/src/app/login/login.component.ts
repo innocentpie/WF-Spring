@@ -30,7 +30,7 @@ export class LoginComponent {
 
         this.felhasznaloService.getFelhasznalo().subscribe(
           (response: Felhasznalo) => {
-            if(response.jogosultsagok.findIndex(x => x.nev === "ADMIN")) {
+            if(response.jogosultsagok.findIndex(x => x.nev === "ADMIN") !== -1) {
               this.router.navigate(['/admin']);
             }
             else {
