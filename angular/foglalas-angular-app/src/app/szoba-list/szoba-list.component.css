@@ -1,0 +1,178 @@
+/* Global Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Styling the mat-card container */
+  mat-card {
+    margin: 20px auto;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color: #ffffff;
+    overflow: hidden;
+  }
+  
+  /* Card Header */
+  mat-card-header {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 8px 8px 0 0;
+  }
+  
+  mat-card-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  mat-card-subtitle {
+    font-size: 1rem;
+    color: #777;
+    margin-top: 5px;
+  }
+  
+  /* Card Content */
+  mat-card-content {
+    padding: 20px;
+  }
+  
+  /* Search Bar Styling */
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  mat-form-field .mat-label {
+    font-weight: 600;
+    color: #444;
+  }
+  
+  mat-form-field input {
+    padding: 8px;
+  }
+  
+  /* Table Styles */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #f9f9f9;
+  }
+  
+  th, td {
+    padding: 12px;
+    text-align: left;
+    font-size: 1rem;
+    color: #444;
+  }
+  
+  th {
+    background-color: #f5f5f5;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  td {
+    background-color: #fff;
+  }
+  
+  td input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background-color: #f7f7f7;
+  }
+  
+  /* Hover effect for table rows */
+  tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  /* Styling Action Buttons */
+  button {
+    min-width: 44px;
+    height: 44px;
+    padding: 6px;
+    margin: 4px;
+  }
+  
+  button mat-icon {
+    font-size: 26px;
+    margin-left: -2px;
+    margin-top: -3px;
+    vertical-align: middle;
+  }
+  
+  mat-icon {
+    font-size: 18px;
+    align-content: center;
+  }
+  
+  /* Add/Delete button colors */
+  button[color="primary"] {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  button[color="warn"] {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  button[color="primary"]:hover {
+    background-color: #0056b3;
+  }
+  
+  button[color="warn"]:hover {
+    background-color: #c82333;
+  }
+  
+  /* Card Actions (Add New Room Button) */
+  mat-card-actions {
+    display: flex;
+    justify-content: flex-start;
+  }
+  
+  mat-card-actions button {
+    font-weight: bold;
+    padding: 12px 20px;
+    border-radius: 4px;
+    background-color: #28a745;
+    color: white;
+  }
+  
+  mat-card-actions button:hover {
+    background-color: #218838;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    mat-card {
+      padding: 15px;
+    }
+  
+    mat-card-header {
+      padding: 15px;
+    }
+  
+    table th, table td {
+      padding: 10px;
+      font-size: 0.9rem;
+    }
+  
+    button {
+      min-width: 44px;
+      height: 44px;
+    }
+  
+    mat-card-actions button {
+      padding: 10px 18px;
+    }
+  }
+  

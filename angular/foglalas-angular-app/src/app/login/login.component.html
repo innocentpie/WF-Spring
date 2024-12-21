@@ -1,14 +1,20 @@
-<mat-card>
-    <h2>Bejelentkezés</h2>
+<mat-card class="login-card">
+    <div class="login-header">
+      <h2>Bejelentkezés</h2>
+      <p class="subtitle">Üdv újra! Kérjük, adja meg a belépési adatokat.</p>
+    </div>
     <form (ngSubmit)="onLogin()">
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="outline" class="form-field">
         <mat-label>Email</mat-label>
         <input matInput [(ngModel)]="email" name="email" required>
       </mat-form-field>
-      <mat-form-field appearance="fill">
+      
+      <mat-form-field appearance="outline" class="form-field">
         <mat-label>Jelszó</mat-label>
         <input matInput type="password" [(ngModel)]="jelszo" name="jelszo" required>
       </mat-form-field>
-      <button mat-raised-button color="primary" type="submit">Bejelentkezés</button>
+      
+      <button mat-raised-button color="primary" type="submit" class="login-button">Bejelentkezés</button>
     </form>
   </mat-card>
+  

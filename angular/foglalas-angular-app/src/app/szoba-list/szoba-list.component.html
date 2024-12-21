@@ -2,15 +2,15 @@
 
 <mat-card>
     <mat-card-header>
-      <mat-card-title>Szobák</mat-card-title>
+      <mat-card-title>Szobák {{ isAdmin() ? '(Adminisztrátor mód)' : '' }}</mat-card-title>
       <mat-card-subtitle>Lista a szobákról</mat-card-subtitle>
     </mat-card-header>
   
     <mat-card-content>
       <!-- Search Section (optional, if you want to add search functionality later) -->
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="outline">
         <mat-label>Keresés</mat-label>
-        <input matInput (input)="applyFilter($event)" placeholder="">
+        <input matInput (input)="applyFilter($event)" placeholder="Szoba keresése">
         <mat-icon matSuffix>search</mat-icon>
       </mat-form-field>
   

@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { Felhasznalo, FelhasznaloService, isAdmin } from '../felhasznalo.service';
 import { AdminSzobaService } from '../admin-szoba.service';
 import { HeaderComponent } from '../header/header.component';
+import { Router } from '@angular/router';
 
 interface SzobaV extends Szoba{
   isEditing: boolean;
@@ -40,7 +41,8 @@ export class SzobaListComponent {
 
   constructor(private szobaService: SzobaService, 
     private felhasznaloService: FelhasznaloService,
-    private adminSzobaService: AdminSzobaService) {
+    private adminSzobaService: AdminSzobaService,
+    private router: Router) {
   }
 
   ngOnInit() {
@@ -53,6 +55,8 @@ export class SzobaListComponent {
       let a = (data as Szoba[]).map(x => { return {...x, isEditing: false, isNew: false } });
       this.szobak = a;
       this.dataSource.data = a;
+
+      console.log(a);
     });
   }
 
@@ -84,7 +88,10 @@ export class SzobaListComponent {
     this.adminSzobaService.delete(id).subscribe(data => {
       this.loadSzobak();
     }, error => {
-      this.loadSzobak();
+      if(error.status === 403)
+        this.router.navigate(['/']);
+      else
+        this.loadSzobak();
     });
   }
 
@@ -107,12 +114,16 @@ export class SzobaListComponent {
     o.subscribe(data => {
       this.loadSzobak();
     }, error => {
-      this.loadSzobak();
+      if(error.status === 403)
+        this.router.navigate(['/']);
+      else
+        this.loadSzobak();
     });
   }
 
   addSzoba(): void {
-    if(this.szobak[this.szobak.length - 1].isNew)
+    if(this.szobak.length > 0
+      && this.szobak[this.szobak.length - 1].isNew)
       return;
 
     let a: SzobaV = {

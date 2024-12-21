@@ -1,12 +1,13 @@
 <mat-toolbar color="primary">
     <button mat-stroked-button color="primary" (click)="navigateToReservations()" class="header-button header-foglalasok-button">Foglalások</button>
     <button mat-stroked-button color="primary" (click)="navigateToRooms()" class="header-button header-szobak-button">Szobák</button>
-
+  
     <span class="spacer"></span>
-
+  
     <div class="username">
-        <span>{{ felhasznalo?.nev || '-' }}</span>
+      <span>{{ felhasznalo?.nev || '-' }}</span>
     </div>
-
+  
     <button mat-stroked-button (click)="logout()" class="header-button header-logout-button">Kijelentkezés</button>
-</mat-toolbar>
+  </mat-toolbar>
+  
