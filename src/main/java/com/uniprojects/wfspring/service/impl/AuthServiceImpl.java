@@ -28,16 +28,16 @@ public class AuthServiceImpl implements AuthService {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    FelhasznaloRepository felhasznaloRepository;
+    private FelhasznaloRepository felhasznaloRepository;
 
     @Autowired
-    JogosultsagRepository jogRepo;
+    private JogosultsagRepository jogRepo;
 
     @Autowired
-    AuthenticationManager manager;
+    private AuthenticationManager manager;
 
     @Autowired
-    JwtService jwtService;
+    private JwtService jwtService;
 
     @Override
     public void regisztracio(RegisztracioDto dto) {
