@@ -13,7 +13,7 @@ public class SzobaController {
     @Autowired
     SzobaService szobaService;
 
-    @GetMapping("/getall")
+    @GetMapping("/getAll")
     public List<SzobaDto> getAll() {
         return szobaService.getAll();
     }
