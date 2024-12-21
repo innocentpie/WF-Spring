@@ -144,10 +144,7 @@ export class FoglalasokComponent {
     o.subscribe(data => {
       this.loadFoglalask();
     }, error => {
-      if(error.status === 403)
-        this.router.navigate(['/']);
-      else
-        this.loadFoglalask();
+      this.loadFoglalask();
     });
   }
 
@@ -180,10 +177,7 @@ export class FoglalasokComponent {
     o.subscribe(data => {
       this.loadFoglalask();
     }, error => {
-      if(error.status === 403)
-        this.router.navigate(['/']);
-      else
-        this.loadFoglalask();
+      this.loadFoglalask();
     });
   }
 

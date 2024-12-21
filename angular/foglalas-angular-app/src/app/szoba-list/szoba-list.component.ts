@@ -89,10 +89,7 @@ export class SzobaListComponent {
     this.adminSzobaService.delete(id).subscribe(data => {
       this.loadSzobak();
     }, error => {
-      if(error.status === 403)
-        this.router.navigate(['/']);
-      else
-        this.loadSzobak();
+      this.loadSzobak();
     });
   }
 
@@ -115,10 +112,7 @@ export class SzobaListComponent {
     o.subscribe(data => {
       this.loadSzobak();
     }, error => {
-      if(error.status === 403)
-        this.router.navigate(['/']);
-      else
-        this.loadSzobak();
+      this.loadSzobak();
     });
   }
 
