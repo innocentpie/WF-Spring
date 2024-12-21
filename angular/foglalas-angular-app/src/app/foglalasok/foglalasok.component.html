@@ -42,18 +42,18 @@
             </td>
         </ng-container>
 
-        <ng-container matColumnDef="szobaSzam">
+        <ng-container matColumnDef="szobaszam">
             <th mat-header-cell *matHeaderCellDef> Szoba szám </th>
             <td mat-cell *matCellDef="let foglalas">
                 <ng-container *ngIf="!foglalas.isEditing">
-                {{ foglalas.szoba.szobaszam }}
+                    {{ foglalas.szoba.szobaszam }}
                 </ng-container>
                 <ng-container *ngIf="foglalas.isEditing">
                     <mat-select [(value)]="foglalas.szobaId" class="tdinput">
                         @for (szoba of szobak; track szoba) {
                           <mat-option [value]="szoba.id">
                             <div class="szoba-option">
-                                <p>{{ szoba.szobaszam }}-es szoba&nbsp;</p>
+                                <p>{{ szoba.szobaszam }} számú szoba&nbsp;</p>
                                 <p>({{szoba.maxFerohely}} férőhely - {{szoba.ftPerEjszaka}}Ft/éj)</p>
                             </div>
                         </mat-option>

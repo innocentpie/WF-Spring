@@ -47,8 +47,8 @@ export class FoglalasokComponent {
   szobak: Szoba[] = [];
   felhasznalok: Felhasznalo[] = [];
 
-  displayedColumns: string[] = ['id', 'szobaSzam', 'elfoglalasDatum', 'elhagyasDatum', 'actions'];
-  adminDisplayedColumns: string[] = ['id', 'felhasznalo', 'szobaSzam', 'elfoglalasDatum', 'elhagyasDatum', 'actions'];
+  displayedColumns: string[] = ['id', 'szobaszam', 'elfoglalasDatum', 'elhagyasDatum', 'actions'];
+  adminDisplayedColumns: string[] = ['id', 'felhasznalo', 'szobaszam', 'elfoglalasDatum', 'elhagyasDatum', 'actions'];
 
   dataSource = new MatTableDataSource<FoglalasV>(this.foglalasok);
 
@@ -117,8 +117,17 @@ export class FoglalasokComponent {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
+    let filterFunction = function(data: FoglalasV, filter: string) {
+      return data.szoba?.szobaszam?.toString().toLowerCase().indexOf(filter.toLowerCase()) !== -1
+        || data.id?.toString().toLowerCase().indexOf(filter.toLowerCase()) !== -1
+        || data.felhasznalo?.email?.toString().toLowerCase().indexOf(filter.toLowerCase()) !== -1
+        || new Date(data.elfoglalasDatum).toLocaleDateString().toLowerCase().indexOf(filter.toLowerCase()) !== -1
+        || new Date(data.elhagyasDatum).toLocaleDateString().toLowerCase().indexOf(filter.toLowerCase()) !== -1
+    }
+
     this.dataSource.filter = filterValue.trim().toLowerCase();
-  
+    this.dataSource.filterPredicate = filterFunction;
+
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
