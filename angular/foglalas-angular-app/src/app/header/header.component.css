@@ -1,0 +1,27 @@
+/* Styling for the header */
+mat-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  /* Spacer to center the username */
+  .spacer {
+    flex: 1;
+  }
+  
+  /* Styling for the username */
+  .username {
+    font-weight: bold;
+    font-size: 16px;
+  }
+  
+  /* Styling for buttons */
+  .header-button {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .header-foglalasok-button {
+    color: red;
+  }

@@ -1,1 +1,87 @@
-<p>szoba-list works!</p>
+<app-header></app-header>
+
+<mat-card>
+    <mat-card-header>
+      <mat-card-title>Szobák</mat-card-title>
+      <mat-card-subtitle>Lista a szobákról</mat-card-subtitle>
+    </mat-card-header>
+  
+    <mat-card-content>
+      <!-- Search Section (optional, if you want to add search functionality later) -->
+      <mat-form-field appearance="fill">
+        <mat-label>Keresés</mat-label>
+        <input matInput (input)="applyFilter($event)" placeholder="">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+  
+      <!-- Table displaying Foglalas -->
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <!-- Column Definitions -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> Id </th>
+          <td mat-cell *matCellDef="let szoba">{{ szoba.id }}</td>
+        </ng-container>
+    
+        <ng-container matColumnDef="szobaSzam">
+            <th mat-header-cell *matHeaderCellDef> Szoba szám </th>
+            <td mat-cell *matCellDef="let szoba">
+                <ng-container *ngIf="!szoba.isEditing">
+                {{ szoba.szobaszam }}
+                </ng-container>
+                <ng-container *ngIf="szoba.isEditing">
+                <input matInput [(ngModel)]="szoba.szobaszam">
+                </ng-container>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="maxFerohely">
+            <th mat-header-cell *matHeaderCellDef> Max férőhely </th>
+            <td mat-cell *matCellDef="let szoba">
+                <ng-container *ngIf="!szoba.isEditing">
+                {{ szoba.maxFerohely }}
+                </ng-container>
+                <ng-container *ngIf="szoba.isEditing">
+                <input matInput [(ngModel)]="szoba.maxFerohely">
+                </ng-container>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="ftPerEjszaka">
+            <th mat-header-cell *matHeaderCellDef> Ft/Éjszaka </th>
+            <td mat-cell *matCellDef="let szoba">
+                <ng-container *ngIf="!szoba.isEditing">
+                {{ szoba.ftPerEjszaka }}
+                </ng-container>
+                <ng-container *ngIf="szoba.isEditing">
+                <input matInput [(ngModel)]="szoba.ftPerEjszaka">
+                </ng-container>
+            </td>
+        </ng-container>
+  
+            <!-- Actions Column (Edit/Delete buttons) -->
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Műveletek </th>
+            <td mat-cell *matCellDef="let szoba">
+            <!-- Edit and Delete buttons -->
+            <button *ngIf="!szoba.isEditing" mat-icon-button color="primary" (click)="editSzoba(szoba.id)">
+                <mat-icon>edit</mat-icon>
+            </button>
+            <button *ngIf="szoba.isEditing" mat-icon-button color="primary" (click)="saveSzoba(szoba)">
+                <mat-icon>save</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteSzoba(szoba.id)">
+                <mat-icon>delete</mat-icon>
+            </button>
+            </td>
+        </ng-container>
+
+        <!-- Table Header and Footer -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </mat-card-content>
+  
+    <mat-card-actions *ngIf="isAdmin()">
+      <button mat-button color="primary">Új szoba hozzáadása</button>
+    </mat-card-actions>
+  </mat-card>

@@ -10,6 +10,10 @@ export interface Felhasznalo {
   jogosultsagok: Jogosultsag[];
 }
 
+export function isAdmin(felhasznalo: Felhasznalo): boolean {
+  return felhasznalo.jogosultsagok.findIndex(x => x.nev === "ADMIN") !== -1;
+}
+
 export interface Jogosultsag {
   id?: number;
   nev: string;

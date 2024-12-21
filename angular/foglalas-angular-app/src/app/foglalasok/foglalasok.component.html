@@ -1,1 +1,45 @@
-<p>foglalasok works!</p>
+<app-header></app-header>
+
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Foglalások</mat-card-title>
+    <mat-card-subtitle>Lista a foglalásokról</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <!-- Search Section (optional, if you want to add search functionality later) -->
+    <mat-form-field appearance="fill">
+      <mat-label>Szoba szám keresése</mat-label>
+      <input matInput (input)="applyFilter($event)" placeholder="Szoba szám">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+    <!-- Table displaying Foglalas -->
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <!-- Column Definitions -->
+      <ng-container matColumnDef="szoba szám">
+        <th mat-header-cell *matHeaderCellDef> Szoba szám </th>
+        <td mat-cell *matCellDef="let foglalas">{{ foglalas.szobaSzam }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="elfoglalás dátuma">
+        <th mat-header-cell *matHeaderCellDef> Elfoglalás dátuma </th>
+        <td mat-cell *matCellDef="let foglalas">{{ foglalas.elfoglalasDatum }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="elhagyás dátuma">
+        <th mat-header-cell *matHeaderCellDef> Elhagyás dátuma </th>
+        <td mat-cell *matCellDef="let foglalas">{{ foglalas.elhagyasDatum }}</td>
+      </ng-container>
+
+      <!-- Table Header and Footer -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <!-- Optionally add any action buttons (e.g., Add new reservation) -->
+    <button mat-button color="primary">Új foglalás hozzáadása</button>
+  </mat-card-actions>
+</mat-card>
