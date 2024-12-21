@@ -15,6 +15,8 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { Router } from '@angular/router';
 import { Szoba, SzobaService } from '../szoba.service';
 import { MatSelectModule } from '@angular/material/select';
+import { AdminFoglalasService } from '../admin-foglalas.service';
+import { AdminFelhasznaloService } from '../admin-felhasznalo.service';
 
 interface FoglalasV extends Foglalas{
   isEditing: boolean;
@@ -43,38 +45,26 @@ export class FoglalasokComponent {
   felhasznalo: Felhasznalo | null = null;
   foglalasok: FoglalasV[] = [];
   szobak: Szoba[] = [];
+  felhasznalok: Felhasznalo[] = [];
+
   displayedColumns: string[] = ['id', 'szobaSzam', 'elfoglalasDatum', 'elhagyasDatum', 'actions'];
+  adminDisplayedColumns: string[] = ['id', 'felhasznalo', 'szobaSzam', 'elfoglalasDatum', 'elhagyasDatum', 'actions'];
+
   dataSource = new MatTableDataSource<FoglalasV>(this.foglalasok);
 
   constructor(private foglalasService: FoglalasService, 
+    private adminFoglalasService: AdminFoglalasService,
     private felhasznaloService: FelhasznaloService,
+    private adminFelhasznaloService: AdminFelhasznaloService,
     private szobaService: SzobaService,
     private router: Router) {
   }
 
   ngOnInit() {
-    this.loadFelhasznalo();
-    this.loadSzobak();
-    this.loadFoglalask();
-  }
-
-  loadFoglalask() {
-    this.foglalasService.getAll().subscribe(data => {
-      let a: FoglalasV[] = (data as Foglalas[]).map(x => { return {...x, isEditing: false, isNew: false } });
-      this.foglalasok = a;
-      this.dataSource.data = a;
-    });
-  }
-
-  loadSzobak() {
-    this.szobaService.getAll().subscribe(data => {
-      this.szobak = data;
-    })
-  }
-
-  loadFelhasznalo() {
-    this.felhasznaloService.getFelhasznalo().subscribe(data => {
-      this.felhasznalo = data;
+    this.loadFelhasznalo(() => {
+      this.loadSzobak();
+      this.loadFelhasznalok();
+      this.loadFoglalask();
     });
   }
 
@@ -83,6 +73,47 @@ export class FoglalasokComponent {
       return isAdmin(this.felhasznalo);
     return false;
   }
+
+  loadFoglalask() {
+    if(this.isAdmin()) {
+      this.displayedColumns = this.adminDisplayedColumns;
+      this.adminFoglalasService.getAll().subscribe(data => {
+        let a: FoglalasV[] = (data as Foglalas[]).map(x => { return {...x, isEditing: false, isNew: false } });
+        this.foglalasok = a;
+        this.dataSource.data = a;
+      });
+    }
+    else{
+      this.foglalasService.getAll().subscribe(data => {
+        let a: FoglalasV[] = (data as Foglalas[]).map(x => { return {...x, isEditing: false, isNew: false } });
+        this.foglalasok = a;
+        this.dataSource.data = a;
+      });
+    }
+  }
+
+  loadSzobak() {
+    this.szobaService.getAll().subscribe(data => {
+      this.szobak = data;
+    })
+  }
+
+  loadFelhasznalok() {
+    if(this.isAdmin()) {
+      this.adminFelhasznaloService.getAll().subscribe(data => {
+        this.felhasznalok = data;
+      })
+    }
+  }
+
+  loadFelhasznalo(callback: Function) {
+    this.felhasznaloService.getFelhasznalo().subscribe(data => {
+      this.felhasznalo = data;
+
+      callback();
+    });
+  }
+
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -94,7 +125,14 @@ export class FoglalasokComponent {
   }
 
   deleteFoglalas(id: number): void {
-    this.foglalasService.delete(id).subscribe(data => {
+    let o;
+    if(this.isAdmin()) {
+      o = this.adminFoglalasService.delete(id);
+    }
+    else {
+      o = this.foglalasService.delete(id);
+    }
+    o.subscribe(data => {
       this.loadFoglalask();
     }, error => {
       if(error.status === 403)
@@ -115,10 +153,20 @@ export class FoglalasokComponent {
     console.log(foglalas);
     let o;
     if(foglalas.isNew) {
-      o = this.foglalasService.create(foglalas);
+      if(this.isAdmin()) {
+        o = this.adminFoglalasService.create(foglalas);
+      }
+      else {
+        o = this.foglalasService.create(foglalas);
+      }
     }
     else {
-      o = this.foglalasService.update(foglalas);
+      if(this.isAdmin()) {
+        o = this.adminFoglalasService.update(foglalas);
+      }
+      else {
+        o = this.foglalasService.update(foglalas);
+      }
     }
     
     o.subscribe(data => {

@@ -46,8 +46,9 @@ export class SzobaListComponent {
   }
 
   ngOnInit() {
-    this.loadFelhasznalo();
-    this.loadSzobak();
+    this.loadFelhasznalo(() => {
+      this.loadSzobak();
+    });
   }
 
   loadSzobak() {
@@ -60,12 +61,14 @@ export class SzobaListComponent {
     });
   }
 
-  loadFelhasznalo() {
+  loadFelhasznalo(callback: Function) {
     this.felhasznaloService.getFelhasznalo().subscribe(data => {
       this.felhasznalo = data;
 
       if(this.felhasznalo && isAdmin(this.felhasznalo))
         this.displayedColumns.push('actions');
+
+      callback();
     });
   }
 

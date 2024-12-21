@@ -22,6 +22,26 @@
           <td mat-cell *matCellDef="let foglalas">{{ foglalas.id }}</td>
         </ng-container>
     
+        <ng-container matColumnDef="felhasznalo">
+            <th mat-header-cell *matHeaderCellDef> Felhasználó </th>
+            <td mat-cell *matCellDef="let foglalas">
+                <ng-container *ngIf="!foglalas.isEditing">
+                {{ foglalas.felhasznalo.email }}
+                </ng-container>
+                <ng-container *ngIf="foglalas.isEditing">
+                    <mat-select [(value)]="foglalas.felhasznaloId" class="tdinput">
+                        @for (felhaszn of felhasznalok; track felhaszn) {
+                          <mat-option [value]="felhaszn.id">
+                            <div class="szoba-option">
+                                <p>{{ felhaszn.email }}</p>
+                            </div>
+                        </mat-option>
+                        }
+                      </mat-select>
+                </ng-container>
+            </td>
+        </ng-container>
+
         <ng-container matColumnDef="szobaSzam">
             <th mat-header-cell *matHeaderCellDef> Szoba szám </th>
             <td mat-cell *matCellDef="let foglalas">
@@ -39,7 +59,6 @@
                         </mat-option>
                         }
                       </mat-select>
-                    <!-- <input matInput [(ngModel)]="foglalas.szoba.szobaszam"> -->
                 </ng-container>
             </td>
         </ng-container>
